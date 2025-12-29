@@ -103,7 +103,7 @@ void menuUser(pelanggan* p) {
     int pilih;
     cout << "1. Tambah Sampah\n";
     cout << "2. Lihat Sampah\n";
-    cout << "3. Kembali\n";
+    cout << "3. Logout\n";
     cout << "Pilih menu: ";
     cin >> pilih;
 
@@ -133,12 +133,13 @@ void menuUser(pelanggan* p) {
              cout << "- " << s->jenisSampah
                  << " (" << s->hargaPerKg << " /kg)\n";
                 s = s->next;
-        }
+        } 
     }
+        menuUser(p);
         break;
     }
     case 3:
-        cout << "Kembali ke menu .\n";
+        cout << "Kembali Menu Awal .\n";
         menuAwal();
         break;
     

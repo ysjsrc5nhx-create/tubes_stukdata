@@ -50,5 +50,5 @@ int menuAwal(){
             cout << "Opsi tidak valid. Silakan coba lagi." << endl;
     }
 
-    return 1; // kembali ke menu utama
+    return 0; // kembali ke menu utama
 }

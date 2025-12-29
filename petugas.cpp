@@ -27,7 +27,7 @@ void kelolaSampah() {
             case 2: lihatSampah(); break;
             case 3: editSampah(); break;
             case 4: hapusSampah(); break;
-            case 5: break;
+            case 5: menuPetugas(nullptr); break;
             default: cout << "Pilihan tidak valid!\n";
         }
 
@@ -80,10 +80,11 @@ void lihatSampah() {
 //                  EDIT SAMPAH
 // ====================================================
 void editSampah() {
-    lihatSampah();
 
-    if (jumlahSampah == 0)
+    if (jumlahSampah == 0) {
+        cout << "Belum ada data sampah.\n";
         return;
+    }
 
     int index;
     cout << "\nPilih nomor sampah yang ingin diedit: ";
@@ -108,10 +109,11 @@ void editSampah() {
 //                  HAPUS SAMPAH
 // ====================================================
 void hapusSampah() {
-    lihatSampah();
-
-    if (jumlahSampah == 0)
+   
+    if (jumlahSampah == 0) {
+        cout << "Belum ada data sampah.\n";
         return;
+    }
 
     int index;
     cout << "\nMasukkan nomor sampah yang ingin dihapus: ";
@@ -174,7 +176,7 @@ void lihatTransaksi() {
 
     if (jumlahTransaksi == 0) {
         cout << "Belum ada transaksi.\n";
-        return;
+        return laporanTransaksi();
     }
 
     for (int i = 0; i < jumlahTransaksi; i++) {
@@ -206,6 +208,7 @@ void laporanTransaksi() {
             tambahTransaksi();
             break;
         case 3:
+            menuPetugas(nullptr);
             break;
         default:
             cout << "Pilihan tidak valid!\n";
@@ -213,8 +216,7 @@ void laporanTransaksi() {
 }
 
 
-void menuPetugas(pelanggan* p){
-
+void menuPetugas(pelanggan* p) {
     int pilihan;
     cout << "==========================" << endl;
     cout << "      MENU PETUGAS       " << endl;
