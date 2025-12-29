@@ -18,7 +18,7 @@ void kelolaSampah() {
         cout << "2. Lihat Data Sampah\n";
         cout << "3. Edit Data Sampah\n";
         cout << "4. Hapus Data Sampah\n";
-        cout << "5. Kembali\n";
+        cout << "5. Kembali ke Menu Utama\n";
         cout << "Pilih menu: ";
         cin >> pilih;
 
@@ -51,7 +51,6 @@ void tambahSampah() {
     jumlahSampah++;
 
     cout << "Data sampah berhasil ditambahkan!\n";
-    kelolaSampah();
 }
 
 
@@ -72,7 +71,6 @@ void lihatSampah() {
         cout << "   Berat   : " << dataSampah[i].berat << " kg\n";
         cout << "   Harga/Kg: Rp " << dataSampah[i].hargaPerKg << "\n";
     }
-    kelolaSampah();
 }
 
 
@@ -101,7 +99,6 @@ void editSampah() {
     dataSampah[index-1] = S;
 
     cout << "Data sampah berhasil diperbarui!\n";
-    kelolaSampah();
 }
 
 
@@ -130,7 +127,6 @@ void hapusSampah() {
 
     jumlahSampah--;
     cout << "Data sampah berhasil dihapus!\n";
-    kelolaSampah();
 }
 
 

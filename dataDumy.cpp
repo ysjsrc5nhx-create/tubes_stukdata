@@ -27,16 +27,8 @@ void dataDummy(pelanggan*& head, pelanggan*& tail) {
     insertPelanggan(head, tail, u2);
     insertPelanggan(head, tail, u3);
     insertPelanggan(head, tail, u4);
-    // ============================
-    // Data Sampah Dummy Untuk User
-    // ============================
-
-    // Alice
-    insertSampahKePelanggan(searchPelanggan(head, "alice"), "Plastik", 5000);
-    insertSampahKePelanggan(searchPelanggan(head, "alice"), "Kertas", 3000);
-
-    // Bob
-    insertSampahKePelanggan(searchPelanggan(head, "bob"), "Kaca", 6000);
+   
+    
 
     // Charlie (petugas) tidak punya sampah
 }

@@ -51,6 +51,10 @@ void insertSampahKePelanggan(pelanggan* p, string jenis, int harga);
 
 ///menu User
 void menuUser(pelanggan* p);
+Sampah inputSampahuser(pelanggan* p);
+void tambahSampahUser(pelanggan* p);
+void lihatSampahUser(pelanggan* p);
+
 
 
 #endif
