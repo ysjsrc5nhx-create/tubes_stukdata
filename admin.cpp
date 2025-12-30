@@ -1,5 +1,6 @@
 #include "header/admin.h"
 #include "header/pelanggan.h"
+#include "header/menu.h"
 #include <iostream>
 using namespace std;
 
@@ -107,7 +108,8 @@ void adminMenu(pelanggan*& head, pelanggan*& tail) {
         cout << "2. Tambah User/Petugas\n";
         cout << "3. Edit User/Petugas\n";
         cout << "4. Hapus User/Petugas\n";
-        cout << "5. Keluar\n";
+        cout << "5. cari user \n";
+        cout << "6. Keluar\n";
         cout << "Pilih menu: ";
         cin >> choice;
 
@@ -125,11 +127,44 @@ void adminMenu(pelanggan*& head, pelanggan*& tail) {
                 adminHapusUser(head);
                 break;
             case 5:
-                cout << "Keluar dari menu admin." << endl;
+                adminSearchUserByNama(head);
                 break;
+            case 6:
+                cout << "Keluar dari menu admin.\n";
+                menuAwal();
+                break;    
             default:
                 cout << "Pilihan tidak valid. Silakan coba lagi." << endl;
         }
-    } while (choice != 5);
+    } while (choice != 6);
 }
 
+void adminSearchUserByNama(pelanggan* head) {
+    string nama;
+    cout << "\n===== SEARCH USER BY NAMA =====\n";
+    cout << "Masukkan nama yang dicari: ";
+    cin.ignore();
+    getline(cin, nama);
+
+
+    pelanggan* current = head;
+    bool ditemukan = false;
+
+    while (current != nullptr) {
+        if (current->dataPelanggan.username == nama) {
+            cout << "\n--- USER DITEMUKAN ---\n";
+            cout << "Nama     : " << current->dataPelanggan.nama << endl;
+            cout << "Alamat   : " << current->dataPelanggan.alamat << endl;
+            cout << "No Telp  : " << current->dataPelanggan.no_telp << endl;
+            cout << "Username : " << current->dataPelanggan.username << endl;
+            cout << "Role     : " << current->dataPelanggan.role << endl;
+            cout << "----------------------\n";
+            ditemukan = true;
+        }
+        current = current->next;
+    }
+
+    if (!ditemukan) {
+        cout << "User dengan nama \"" << nama << "\" tidak ditemukan.\n";
+    }
+}

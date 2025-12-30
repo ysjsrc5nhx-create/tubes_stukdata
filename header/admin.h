@@ -9,6 +9,7 @@ void adminEditUser(pelanggan* head);
 void adminHapusUser(pelanggan*& head);
 
 void adminMenu(pelanggan*& head, pelanggan*& tail);
+void adminSearchUserByNama(pelanggan* head);
 
 
 

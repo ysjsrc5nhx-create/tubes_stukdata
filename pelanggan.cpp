@@ -105,7 +105,9 @@ void menuUser(pelanggan* p) {
     int pilih;
     cout << "1. Tambah Sampah\n";
     cout << "2. Lihat Sampah\n";
-    cout << "3. Logout\n";
+    cout << "3. edit sampah \n";
+    cout << "4. delete sampah \n";
+
     cout << "Pilih menu: ";
     cin >> pilih;
 
@@ -114,8 +116,6 @@ void menuUser(pelanggan* p) {
     case 1: {
         tambahSampahUser(p);
         menuUser(p);
-        
-         
         break;
     }
     case 2: {
@@ -124,10 +124,18 @@ void menuUser(pelanggan* p) {
         break;
     }
     case 3:
-        cout << "Kembali Menu Awal .\n";
-        menuAwal();
+        cout << "edit sampah .\n";
+        editSampahUser(p);
+        menuUser(p);
         break;
-    
+
+    case 4:
+        cout << "delete sampah .\n";
+        deleteSampahUser(p);
+        menuUser(p);
+        break;
+        break;
+
     default:
         break;
     }
@@ -136,6 +144,126 @@ void menuUser(pelanggan* p) {
 
     cout << "=========================\n";
 }
+void editSampahUser(pelanggan* p) {
+    if (jumlahSampah == 0) {
+        cout << "Belum ada data sampah.\n";
+        return;
+    }
+
+    cout << "\n=== EDIT DATA SAMPAH ===\n";
+
+    int index;
+    for (int i = 0; i < jumlahSampah; i++) {
+        cout << i + 1 << ". "
+             << dataSampah[i].jenisSampah
+             << " (" << dataSampah[i].kategori << ")\n";
+    }
+
+    cout << "Pilih nomor sampah yang ingin diedit: ";
+    cin >> index;
+    index--; // konversi ke index array
+
+    if (index < 0 || index >= jumlahSampah) {
+        cout << "Pilihan tidak valid.\n";
+        return;
+    }
+
+    // Simpan jenis lama (buat update linked list)
+    string jenisLama = dataSampah[index].jenisSampah;
+
+    // Input ulang data
+    Sampah S = inputSampahuser(p);
+
+    // Update ARRAY
+    dataSampah[index] = S;
+
+    // Update LINKED LIST pelanggan
+    SampahNode* curr = p->daftarSampah;
+    while (curr != nullptr) {
+        if (curr->jenisSampah == jenisLama) {
+            curr->jenisSampah = S.jenisSampah;
+            curr->hargaPerKg  = S.hargaPerKg;
+            break;
+        }
+        curr = curr->next;
+    }
+
+    cout << "Data sampah berhasil diperbarui!\n";
+    menuUser(p);
+}
+
+void deleteSampahUser(pelanggan* p) {
+    if (jumlahSampah == 0) {
+        cout << "Belum ada data sampah.\n";
+        return;
+    }
+
+    cout << "\n=== HAPUS DATA SAMPAH ===\n";
+
+    // Tampilkan daftar sampah
+    for (int i = 0; i < jumlahSampah; i++) {
+        cout << i + 1 << ". "
+             << dataSampah[i].jenisSampah
+             << " (" << dataSampah[i].kategori << ")\n";
+    }
+
+    int index;
+    cout << "Pilih nomor sampah yang ingin dihapus: ";
+    cin >> index;
+    index--; // konversi ke index array
+
+    if (index < 0 || index >= jumlahSampah) {
+        cout << "Pilihan tidak valid.\n";
+        return;
+    }
+
+    // Simpan jenis sampah yang akan dihapus
+    string jenisHapus = dataSampah[index].jenisSampah;
+
+    /* =======================
+       HAPUS DARI ARRAY
+       ======================= */
+    for (int i = index; i < jumlahSampah - 1; i++) {
+        dataSampah[i] = dataSampah[i + 1];
+    }
+    jumlahSampah--;
+
+    /* =======================
+       HAPUS DARI LINKED LIST
+       ======================= */
+    SampahNode* curr = p->daftarSampah;
+
+    while (curr != nullptr) {
+        if (curr->jenisSampah == jenisHapus) {
+
+            // Jika node pertama
+            if (curr->prev == nullptr) {
+                p->daftarSampah = curr->next;
+                if (curr->next != nullptr)
+                    curr->next->prev = nullptr;
+            }
+            // Jika node terakhir
+            else if (curr->next == nullptr) {
+                curr->prev->next = nullptr;
+            }
+            // Jika di tengah
+            else {
+                curr->prev->next = curr->next;
+                curr->next->prev = curr->prev;
+            }
+
+            delete curr;
+            break;
+        }
+        curr = curr->next;
+    }
+
+    cout << "Data sampah berhasil dihapus!\n";
+    menuUser(p);
+}
+
+
+
 void lihatSampahUser(pelanggan* p) {
     cout << "\n=== DAFTAR SAMPAH ANDA ===\n";
     SampahNode* current = p->daftarSampah;

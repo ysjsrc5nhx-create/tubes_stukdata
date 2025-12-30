@@ -54,6 +54,8 @@ void menuUser(pelanggan* p);
 Sampah inputSampahuser(pelanggan* p);
 void tambahSampahUser(pelanggan* p);
 void lihatSampahUser(pelanggan* p);
+void editSampahUser(pelanggan* p);
+void deleteSampahUser(pelanggan* p);
 
 
 
