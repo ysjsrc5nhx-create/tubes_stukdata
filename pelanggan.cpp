@@ -107,6 +107,7 @@ void menuUser(pelanggan* p) {
     cout << "2. Lihat Sampah\n";
     cout << "3. edit sampah \n";
     cout << "4. delete sampah \n";
+    cout << "5.back ke menu awal \n";
 
     cout << "Pilih menu: ";
     cin >> pilih;
@@ -134,7 +135,11 @@ void menuUser(pelanggan* p) {
         deleteSampahUser(p);
         menuUser(p);
         break;
+    case 5:
+        cout << "kembali ke menu awal .\n";
+        menuAwal();
         break;
+
 
     default:
         break;

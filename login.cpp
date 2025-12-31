@@ -1,5 +1,8 @@
 #include "header/login.h"
 #include "header/admin.h"
+#include "header/pelanggan.h"
+#include "header/petugas.h"
+#include "header/menu.h"
 #include <iostream>
 using namespace std;
 

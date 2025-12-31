@@ -41,7 +41,9 @@ int menuAwal(){
             login(head);               // gunakan head global
             break;
         case 2:
-            registerUser(head, tail);  // gunakan head/tail global
+            registerUser(head, tail); 
+            menuAwal();
+             // gunakan head/tail global
             break;
         case 3:
             cout << "Terima kasih telah menggunakan sistem kami. Sampai jumpa!" << endl;
