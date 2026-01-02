@@ -116,7 +116,6 @@ void menuUser(pelanggan* p) {
     {
     case 1: {
         tambahSampahUser(p);
-        menuUser(p);
         break;
     }
     case 2: {
@@ -127,13 +126,13 @@ void menuUser(pelanggan* p) {
     case 3:
         cout << "edit sampah .\n";
         editSampahUser(p);
-        menuUser(p);
+        return;
         break;
 
     case 4:
         cout << "delete sampah .\n";
         deleteSampahUser(p);
-        menuUser(p);
+        return;
         break;
     case 5:
         cout << "kembali ke menu awal .\n";
