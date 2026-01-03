@@ -4,12 +4,6 @@
 #include <iostream>
 using namespace std;
 
-// Define global variables
-tipeJumlahSampah jumlahSampah = 0;
-Sampah dataSampah[20];
-
-tipeJumlahTransaksi jumlahTransaksi = 0;
-Transaksi dataTransaksi[50];
 
 void dataDummy(pelanggan*& head, pelanggan*& tail) {
 

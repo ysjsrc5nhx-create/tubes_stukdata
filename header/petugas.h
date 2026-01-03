@@ -1,45 +1,53 @@
 #ifndef PETUGAS_H
 #define PETUGAS_H
+
+#include <string>
 #include "pengeloaan_sampah.h"
 #include "pelanggan.h"
 
-#include <string>
 using namespace std;
 
 // ================================
-// FITUR PETUGAS - SAMPAH
+// NODE SAMPAH (linked list)
 // ================================
-
-typedef int tipeJumlahSampah;
-typedef int tipeJumlahTransaksi;
-
-extern tipeJumlahSampah jumlahSampah;
-extern Sampah dataSampah[20];
-
-void kelolaSampah();
-void tambahSampah();
-void lihatSampah();
-void editSampah();
-void hapusSampah();
-
+struct NodeSampah {
+    Sampah data;
+    NodeSampah* next;
+};
 
 // ================================
-// FITUR PETUGAS - TRANSAKSI
+// NODE TRANSAKSI (multi link ke sampah)
 // ================================
-
 struct Transaksi {
     string idTransaksi;
     string namaNasabah;
-    string jenisSampah;
-    float berat;
-    int totalHarga;
+
+    NodeSampah* daftarSampah; // relasi ke banyak sampah
+    Transaksi* next;          // linked list transaksi
 };
 
-extern tipeJumlahTransaksi jumlahTransaksi;
-extern Transaksi dataTransaksi[50];
-void laporanTransaksi();
+
+// ================================
+// HEAD TRANSAKSI
+// ================================
+extern Transaksi* headTransaksi;
+
+// transaksi
 void tambahTransaksi();
 void lihatTransaksi();
+void laporanTransaksi();
+
+// kelola sampah per transaksi
+void tambahSampahKeTransaksiMenu();
+void lihatSampahPerTransaksi();
+void editSampahTransaksi();
+void hapusSampahTransaksi();
+void kelolaSampah();
+
+
+// util
+Transaksi* cariTransaksiById(string id);
+// menu petugas
 void menuPetugas(pelanggan* p);
 
 #endif
