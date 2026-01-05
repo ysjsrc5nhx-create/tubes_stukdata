@@ -264,16 +264,18 @@ void lihatSampahUser(pelanggan* p) {
 void tambahSampahUser(pelanggan* p) {
     Sampah s = inputSampahuser(p);
 
-    // insert into customer's personal list and get the node
+    // masukkan sampah ke daftar sampah milik pelanggan dan ambil node-nya
     SampahNode* userNode = insertSampahKePelanggan(p, s);
 
-    // create a new transaksi automatically with status "belum" and link the sampah
+    // buat transaksi baru secara otomatis dengan status "belum"
     Transaksi* baru = new Transaksi();
-    // use global auto-increment transaksiCounter (defined in petugas.cpp)
+
+    // gunakan auto-increment global transaksiCounter (didefinisikan di petugas.cpp)
     baru->idTransaksi = to_string(transaksiCounter++);
     baru->namaNasabah = p->dataPelanggan.nama;
-    baru->status = "belum"; // constructor sets this, but keep explicit
-    // create a node for this transaction's sampah list
+    baru->status = "belum"; // set status awal transaksi
+
+    // buat node sampah untuk daftar sampah pada transaksi
     SampahNode* sn = createNodeSampah(s);
     if (sn) {
         sn->transaksi = baru;
@@ -281,15 +283,20 @@ void tambahSampahUser(pelanggan* p) {
     } else {
         baru->daftarSampah = nullptr;
     }
-    // link the user's personal sampah node to this transaksi so status is visible
+
+    // hubungkan node sampah milik pelanggan ke transaksi
+    // agar status transaksi bisa dilihat dari data sampah pelanggan
     if (userNode) {
         userNode->transaksi = baru;
-        // debug check
-        cout << "[debug] linked userNode to transaksi with status: " << (userNode->transaksi ? userNode->transaksi->status : string("NULL")) << endl;
+
+        // debug: memastikan node pelanggan berhasil terhubung ke transaksi
+        cout << "[debug] linked userNode to transaksi with status: "
+             << (userNode->transaksi ? userNode->transaksi->status : string("NULL")) << endl;
     }
+
     baru->next = nullptr;
 
-    // append transaksi to global list
+    // tambahkan transaksi ke linked list transaksi global
     if (!headTransaksi)
         headTransaksi = baru;
     else {
@@ -298,7 +305,9 @@ void tambahSampahUser(pelanggan* p) {
         t->next = baru;
     }
 
-    cout << "Sampah berhasil ditambahkan dan transaksi otomatis dibuat (ID: " << baru->idTransaksi << ").\n";
+    // tampilkan pesan bahwa sampah dan transaksi berhasil dibuat
+    cout << "Sampah berhasil ditambahkan dan transaksi otomatis dibuat (ID: "
+         << baru->idTransaksi << ").\n";
 }
 
 
