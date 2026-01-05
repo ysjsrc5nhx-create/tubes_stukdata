@@ -41,12 +41,11 @@ void printListBertingkat(pelanggan* head);
         ADT SAMPAH
    ======================= */
 
-SampahNode* createNodeSampah(string jenis, int harga);
-void insertSampahKePelanggan(pelanggan* p, string jenis, int harga);
+// create node from Sampah object to avoid signature conflicts and match node layout
+SampahNode* createNodeSampah(const Sampah& s);
+// insert sampah ke pelanggan dan kembalikan pointer ke node yang dibuat
+SampahNode* insertSampahKePelanggan(pelanggan* p, const Sampah& s);
 
-
-/// Implementation of insertSampahKePelanggan
-void insertSampahKePelanggan(pelanggan* p, string jenis, int harga);
 
 
 ///menu User

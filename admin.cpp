@@ -1,5 +1,6 @@
 #include "header/admin.h"
 #include "header/pelanggan.h"
+#include "header/petugas.h"
 #include "header/menu.h"
 #include <iostream>
 using namespace std;
@@ -109,7 +110,8 @@ void adminMenu(pelanggan*& head, pelanggan*& tail) {
         cout << "3. Edit User/Petugas\n";
         cout << "4. Hapus User/Petugas\n";
         cout << "5. cari user \n";
-        cout << "6. Keluar\n";
+        cout << "6. Liat Semua List Transaksi\n";
+        cout << "7. Keluar\n";
         cout << "Pilih menu: ";
         cin >> choice;
 
@@ -130,13 +132,16 @@ void adminMenu(pelanggan*& head, pelanggan*& tail) {
                 adminSearchUserByNama(head);
                 break;
             case 6:
+                adminLihatSemuaTransaksi();
+                break;
+            case 7:
                 cout << "Keluar dari menu admin.\n";
                 menuAwal();
                 break;    
             default:
                 cout << "Pilihan tidak valid. Silakan coba lagi." << endl;
         }
-    } while (choice != 6);
+    } while (choice != 7);
 }
 
 void adminSearchUserByNama(pelanggan* head) {
@@ -167,4 +172,9 @@ void adminSearchUserByNama(pelanggan* head) {
     if (!ditemukan) {
         cout << "User dengan nama \"" << nama << "\" tidak ditemukan.\n";
     }
+}
+
+void adminLihatSemuaTransaksi() {
+    cout << "\n===== SEMUA TRANSAKSI =====\n";
+    lihatTransaksi();
 }

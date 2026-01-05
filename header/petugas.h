@@ -2,28 +2,29 @@
 #define PETUGAS_H
 
 #include <string>
-#include "pengeloaan_sampah.h"
-#include "pelanggan.h"
+#include "pelanggan.h" // pelanggan.h already includes pengeloaan_sampah.h
 
 using namespace std;
 
-// ================================
-// NODE SAMPAH (linked list)
-// ================================
-struct NodeSampah {
-    Sampah data;
-    NodeSampah* next;
-};
+
+
 
 // ================================
 // NODE TRANSAKSI (multi link ke sampah)
 // ================================
 struct Transaksi {
     string idTransaksi;
+    string status;    // sudah selesai/belum
     string namaNasabah;
 
-    NodeSampah* daftarSampah; // relasi ke banyak sampah
-    Transaksi* next;          // linked list transaksi
+    // hubungan ke list sampah per transaksi
+    SampahNode* daftarSampah;
+
+    // next untuk linked list transaksi
+    Transaksi* next;
+
+    // konstruktor default: status otomatis "belum"
+    Transaksi() : idTransaksi(""), status("belum"), namaNasabah(""), daftarSampah(nullptr), next(nullptr) {}
 };
 
 
@@ -31,19 +32,15 @@ struct Transaksi {
 // HEAD TRANSAKSI
 // ================================
 extern Transaksi* headTransaksi;
+// global counter for transaksi IDs (auto-increment)
+extern int transaksiCounter;
 
 // transaksi
-void tambahTransaksi();
 void lihatTransaksi();
 void laporanTransaksi();
 
-// kelola sampah per transaksi
-void tambahSampahKeTransaksiMenu();
-void lihatSampahPerTransaksi();
-void editSampahTransaksi();
-void hapusSampahTransaksi();
-void kelolaSampah();
-
+// ubah status transaksi (mis. menjadi "sudah") berdasarkan ID
+void selesaikanTransaksiById();
 
 // util
 Transaksi* cariTransaksiById(string id);

@@ -3,6 +3,7 @@
 #include "header/petugas.h"
 #include "header/menu.h"
 #include <iostream>
+#include <ctime>
 using namespace std;
 void createListPelanggan(pelanggan*& head, pelanggan*& tail) {
     head = nullptr;
@@ -66,24 +67,25 @@ void printListBertingkat(pelanggan* head) {
         cout << "Pelanggan: " << currentPelanggan->dataPelanggan.nama << endl;
         SampahNode* currentSampah = currentPelanggan->daftarSampah;
         while (currentSampah != nullptr) {
-            cout << "  Sampah: " << currentSampah->jenisSampah 
-                 << ", Harga per Kg: " << currentSampah->hargaPerKg << endl;
+            // access Sampah data via dataSampah member of node
+            cout << "  Sampah: " << currentSampah->dataSampah.jenisSampah
+                 << ", Harga per Kg: " << currentSampah->dataSampah.hargaPerKg << endl;
             currentSampah = currentSampah->next;
         }
         currentPelanggan = currentPelanggan->next;
     }
 }
 
-SampahNode* createNodeSampah(string jenis, int harga) {
+// create node from Sampah object to avoid signature conflicts and match node layout
+SampahNode* createNodeSampah(const Sampah& s) {
     SampahNode* newNode = new SampahNode;
-    newNode->jenisSampah = jenis;
-    newNode->hargaPerKg = harga;
+    newNode->dataSampah = s;
     newNode->next = nullptr;
     newNode->prev = nullptr;
     return newNode;
 }
-void insertSampahKePelanggan(pelanggan* p, string jenis, int harga) {
-    SampahNode* newNode = createNodeSampah(jenis, harga);
+SampahNode* insertSampahKePelanggan(pelanggan* p, const Sampah& s) {
+    SampahNode* newNode = createNodeSampah(s);
     if (p->daftarSampah == nullptr) {
         p->daftarSampah = newNode;
     } else {
@@ -94,6 +96,7 @@ void insertSampahKePelanggan(pelanggan* p, string jenis, int harga) {
         current->next = newNode;
         newNode->prev = current;
     }
+    return newNode;
 }
 
 
@@ -160,7 +163,7 @@ void editSampahUser(pelanggan* p) {
 
     cout << "\nDaftar Sampah:\n";
     while (curr) {
-        cout << index++ << ". " << curr->jenisSampah << endl;
+        cout << index++ << ". " << curr->dataSampah.jenisSampah << endl;
         curr = curr->next;
     }
 
@@ -183,8 +186,8 @@ void editSampahUser(pelanggan* p) {
     cout << "Masukkan data baru:\n";
     Sampah s = inputSampahuser(p);
 
-    curr->jenisSampah = s.jenisSampah;
-    curr->hargaPerKg  = s.hargaPerKg;
+    curr->dataSampah.jenisSampah = s.jenisSampah;
+    curr->dataSampah.hargaPerKg  = s.hargaPerKg;
 
     cout << "Data berhasil diperbarui.\n";
 }
@@ -200,7 +203,7 @@ void deleteSampahUser(pelanggan* p) {
 
     cout << "\nDaftar Sampah:\n";
     while (curr) {
-        cout << index++ << ". " << curr->jenisSampah << endl;
+        cout << index++ << ". " << curr->dataSampah.jenisSampah << endl;
         curr = curr->next;
     }
 
@@ -247,7 +250,11 @@ void lihatSampahUser(pelanggan* p) {
 
     int i = 1;
     while (current != nullptr) {
-        cout << i << ". Jenis Sampah: " << current->jenisSampah << ", Harga per Kg: " << current->hargaPerKg << endl;
+        cout << i << ". Jenis Sampah: " << current->dataSampah.jenisSampah << ", Harga per Kg: " << current->dataSampah.hargaPerKg;
+        if (current->transaksi != nullptr) {
+            cout << ", Status Transaksi: " << current->transaksi->status;
+        }
+        cout << endl;
         current = current->next;
         i++;
     }
@@ -256,8 +263,42 @@ void lihatSampahUser(pelanggan* p) {
 
 void tambahSampahUser(pelanggan* p) {
     Sampah s = inputSampahuser(p);
-    insertSampahKePelanggan(p, s.jenisSampah, s.hargaPerKg);
-    cout << "Sampah berhasil ditambahkan.\n";
+
+    // insert into customer's personal list and get the node
+    SampahNode* userNode = insertSampahKePelanggan(p, s);
+
+    // create a new transaksi automatically with status "belum" and link the sampah
+    Transaksi* baru = new Transaksi();
+    // use global auto-increment transaksiCounter (defined in petugas.cpp)
+    baru->idTransaksi = to_string(transaksiCounter++);
+    baru->namaNasabah = p->dataPelanggan.nama;
+    baru->status = "belum"; // constructor sets this, but keep explicit
+    // create a node for this transaction's sampah list
+    SampahNode* sn = createNodeSampah(s);
+    if (sn) {
+        sn->transaksi = baru;
+        baru->daftarSampah = sn;
+    } else {
+        baru->daftarSampah = nullptr;
+    }
+    // link the user's personal sampah node to this transaksi so status is visible
+    if (userNode) {
+        userNode->transaksi = baru;
+        // debug check
+        cout << "[debug] linked userNode to transaksi with status: " << (userNode->transaksi ? userNode->transaksi->status : string("NULL")) << endl;
+    }
+    baru->next = nullptr;
+
+    // append transaksi to global list
+    if (!headTransaksi)
+        headTransaksi = baru;
+    else {
+        Transaksi* t = headTransaksi;
+        while (t->next) t = t->next;
+        t->next = baru;
+    }
+
+    cout << "Sampah berhasil ditambahkan dan transaksi otomatis dibuat (ID: " << baru->idTransaksi << ").\n";
 }
 
 

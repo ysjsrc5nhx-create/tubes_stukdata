@@ -1,8 +1,10 @@
 #ifndef PENGELOLAAN_SAMPAH_H
 #define PENGELOLAAN_SAMPAH_H
-
 #include <string>
 using namespace std;
+
+// forward-declare Transaksi to avoid circular include with petugas.h
+struct Transaksi;
 
 typedef struct Sampah {
     string jenisSampah;
@@ -11,30 +13,21 @@ typedef struct Sampah {
     string kategori; 
 } Sampah;
 
-typedef struct SampahNode {
-    string jenisSampah;
-    int hargaPerKg;
+struct SampahNode {
+    Sampah dataSampah;        // ✅ konsisten dengan cpp
     SampahNode* next;
     SampahNode* prev;
-} SampahNode;
+    Transaksi* transaksi;     // ✅ HANYA 1
+};
 
-typedef struct queueNode {
-    Sampah data;
-    queueNode* next;
-} queueNode;
 
 
 // Pointer queue (global) 
-extern queueNode* depan;   // front
-extern queueNode* belakang; // rear
+extern SampahNode* depan;   // front
+extern SampahNode* belakang; // rear
 
 
 // Prototipe fungsi queue
-queueNode* createSampah(Sampah S);
-void enqueueSampah(Sampah S);
-string dequeueSampah();
-void tampilQueueSampah();
-bool isEmpty();
 Sampah inputSampah();
 float getHargaPerKgJenis(string kategori, string jenis);
 
