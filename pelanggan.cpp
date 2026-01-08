@@ -102,55 +102,53 @@ SampahNode* insertSampahKePelanggan(pelanggan* p, const Sampah& s) {
 
 void menuUser(pelanggan* p) {
     cout << "\n===== MENU USER =====\n";
-    cout << "Nama: " << p->dataPelanggan.nama << endl;
-    cout << "Alamat: " << p->dataPelanggan.alamat << endl;
+    cout << "Nama   : " << p->dataPelanggan.nama << endl;
+    cout << "Alamat : " << p->dataPelanggan.alamat << endl;
     cout << "No Telp: " << p->dataPelanggan.no_telp << endl;
-    int pilih;
+
     cout << "1. Tambah Sampah\n";
     cout << "2. Lihat Sampah\n";
-    cout << "3. edit sampah \n";
-    cout << "4. delete sampah \n";
-    cout << "5.back ke menu awal \n";
+    cout << "3. Edit Sampah\n";
+    cout << "4. Delete Sampah\n";
+    cout << "5. Back ke Menu Awal\n";
+    cout << "Pilih menu (1-5): ";
 
-    cout << "Pilih menu: ";
-    cin >> pilih;
+    int pilih;
 
-    switch (pilih)
-    {
-    case 1: {
-        tambahSampahUser(p);
+    if (!(cin >> pilih)) {
+        cout << "Input tidak valid! Harap masukkan ANGKA 1-5.\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         menuUser(p);
-        break;
-    }
-    case 2: {
-        lihatSampahUser(p);
-        menuUser(p);
-        break;
-    }
-    case 3:
-        cout << "edit sampah .\n";
-        editSampahUser(p);
-        menuUser(p);
-        break;
-
-    case 4:
-        cout << "delete sampah .\n";
-        deleteSampahUser(p);
-        menuUser(p);
-        break;
-    case 5:
-        cout << "kembali ke menu awal .\n";
-        menuAwal();
-        break;
-
-
-    default:
-        break;
+        return;
     }
 
-   
+    if (pilih < 1 || pilih > 5) {
+        cout << "Pilihan tidak tersedia! Pilih angka 1-5.\n";
+        menuUser(p);
+        return;
+    }
 
-    cout << "=========================\n";
+    switch (pilih) {
+        case 1:
+            tambahSampahUser(p);
+            break;
+        case 2:
+            lihatSampahUser(p);
+            break;
+        case 3:
+            editSampahUser(p);
+            break;
+        case 4:
+            deleteSampahUser(p);
+            break;
+        case 5:
+            cout << "Kembali ke menu awal.\n";
+            menuAwal();
+            return;
+    }
+
+    menuUser(p); // tampilkan ulang menu setelah aksi
 }
 void editSampahUser(pelanggan* p) {
     if (!p->daftarSampah) {
@@ -270,7 +268,7 @@ void tambahSampahUser(pelanggan* p) {
     // buat transaksi baru secara otomatis dengan status "belum"
     Transaksi* baru = new Transaksi();
 
-    // gunakan auto-increment global transaksiCounter (didefinisikan di petugas.cpp)
+    // gunakan auto-increment 
     baru->idTransaksi = to_string(transaksiCounter++);
     baru->namaNasabah = p->dataPelanggan.nama;
     baru->status = "belum"; // set status awal transaksi
@@ -315,32 +313,61 @@ Sampah inputSampahuser(pelanggan* p) {
     Sampah S;
     int pilihKategori;
 
-    cout << "\n=== KATEGORI SAMPAH ===\n";
-    cout << "1. Organik\n";
-    cout << "2. Anorganik\n";
-    cout << "Pilihan: ";
-    cin >> pilihKategori;
+    while (true) {
+        cout << "\n=== KATEGORI SAMPAH ===\n";
+        cout << "1. Organik\n";
+        cout << "2. Anorganik\n";
+        cout << "Pilihan (1-2): ";
 
-    // KATEGORI ORGANIK
+        if (!(cin >> pilihKategori)) {
+            cout << "Input tidak valid! Harap masukkan angka 1 atau 2.\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
+        if (pilihKategori < 1 || pilihKategori > 2) {
+            cout << "Pilihan kategori tidak tersedia!\n";
+            continue;
+        }
+
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        break;
+    }
+
     if (pilihKategori == 1) {
         S.kategori = "Organik";
-        cin.ignore();
         cout << "Masukkan jenis sampah organik: ";
         getline(cin, S.jenisSampah);
     }
-    // KATEGORI ANORGANIK
-    else if (pilihKategori == 2) {
-        S.kategori = "Anorganik";
 
+    else {
+        S.kategori = "Anorganik";
         int pilihJenis;
-        cout << "\n=== JENIS SAMPAH ANORGANIK ===\n";
-        cout << "1. Plastik\n";
-        cout << "2. Kaca\n";
-        cout << "3. Logam\n";
-        cout << "4. Kertas\n";
-        cout << "5. Karet\n";
-        cout << "Pilihan: ";
-        cin >> pilihJenis;
+
+        while (true) {
+            cout << "\n=== JENIS SAMPAH ANORGANIK ===\n";
+            cout << "1. Plastik\n";
+            cout << "2. Kaca\n";
+            cout << "3. Logam\n";
+            cout << "4. Kertas\n";
+            cout << "5. Karet\n";
+            cout << "Pilihan (1-5): ";
+
+            if (!(cin >> pilihJenis)) {
+                cout << "Input tidak valid! Harap masukkan angka 1-5.\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                continue;
+            }
+
+            if (pilihJenis < 1 || pilihJenis > 5) {
+                cout << "Pilihan jenis tidak tersedia!\n";
+                continue;
+            }
+
+            break;
+        }
 
         switch (pilihJenis) {
             case 1: S.jenisSampah = "Plastik"; break;
@@ -348,18 +375,28 @@ Sampah inputSampahuser(pelanggan* p) {
             case 3: S.jenisSampah = "Logam"; break;
             case 4: S.jenisSampah = "Kertas"; break;
             case 5: S.jenisSampah = "Karet"; break;
-            default: S.jenisSampah = "Tidak diketahui"; break;
         }
     }
-    else {
-        cout << "Pilihan kategori tidak valid.\n";
-        S.kategori = "Tidak valid";
-        S.jenisSampah = "Tidak valid";
+
+    while (true) {
+        cout << "Masukkan berat (kg): ";
+
+        if (!(cin >> S.berat)) {
+            cout << "Berat harus berupa angka!\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
+        if (S.berat <= 0) {
+            cout << "Berat harus lebih dari 0 kg!\n";
+            continue;
+        }
+
+        break;
     }
 
-    cout << "Masukkan berat (kg): ";
-    cin >> S.berat;
-
+    // ================= HARGA =================
     S.hargaPerKg = getHargaPerKgJenis(S.kategori, S.jenisSampah);
     cout << "Harga per Kg otomatis: Rp " << S.hargaPerKg << endl;
 

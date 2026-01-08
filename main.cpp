@@ -17,39 +17,47 @@ int main() {
     // Inisialisasi data sekali saja
     dataDummy(head, tail);
 
-    // Loop utama menu
-    while (true) {
-        if (menuAwal() == 0) break;
+   while (true) {
+        menuAwal();
     }
-
     return 0;
 }
 
 // ...existing code...
-int menuAwal(){
-
+int menuAwal() {
     cout << "=== Selamat Datang di Sistem Pengelolaan Pelanggan Sampah ===" << endl;
     cout << "1. Login" << endl;
     cout << "2. Register" << endl;
     cout << "3. Exit" << endl;
     cout << "Pilih opsi (1-3): ";
+
     int choice;
-    cin >> choice;
+
+    if (!(cin >> choice)) {
+        cout << "Input tidak valid! Harap masukkan angka 1-3.\n";
+
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        return 0; // kembali ke menu
+    }
 
     switch (choice) {
         case 1:
-            login(head);               // gunakan head global
+            login(head);
             break;
+
         case 2:
-            registerUser(head, tail); 
-            menuAwal();
-             // gunakan head/tail global
+            registerUser(head, tail);
             break;
+
         case 3:
             cout << "Terima kasih telah menggunakan sistem kami. Sampai jumpa!" << endl;
-            return 0;
+            exit(0);
+
         default:
-            cout << "Opsi tidak valid. Silakan coba lagi." << endl;
+            cout << "Opsi tidak tersedia! Silakan pilih 1, 2, atau 3.\n";
+            break;
     }
 
     return 0; // kembali ke menu utama

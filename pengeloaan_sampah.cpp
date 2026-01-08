@@ -63,12 +63,12 @@ Sampah inputSampah() {
 
 
 float getHargaPerKgJenis(string kategori, string jenis) {
-    // ✅ Harga SAMPAH ORGANIK (lebih murah)
+    // Harga SAMPAH ORGANIK (lebih murah)
     if (kategori == "Organik") {
         return 1000;   // harga organik flat
     }
 
-    // ✅ Harga SAMPAH ANORGANIK (beda tiap jenis)
+    //  Harga SAMPAH ANORGANIK (beda tiap jenis)
     else if (kategori == "Anorganik") {
         if (jenis == "Plastik") return 4000;
         if (jenis == "Kaca")    return 3000;

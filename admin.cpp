@@ -113,7 +113,13 @@ void adminMenu(pelanggan*& head, pelanggan*& tail) {
         cout << "6. Liat Semua List Transaksi\n";
         cout << "7. Keluar\n";
         cout << "Pilih menu: ";
-        cin >> choice;
+        if (!(cin >> choice)) {
+        cout << "Input tidak valid! Harap masukkan ANGKA 1-5.\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        adminMenu(head, tail);
+        return;
+     }
 
         switch (choice) {
             case 1:

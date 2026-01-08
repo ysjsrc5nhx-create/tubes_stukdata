@@ -72,7 +72,19 @@ void laporanTransaksi() {
     cout << "Pilih menu: ";
     
     int pilihan;
-    cin >> pilihan;
+    if (!(cin >> pilihan)) {
+        cout << "Input tidak valid! Harap masukkan ANGKA 1-3.\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        laporanTransaksi();
+        return;
+    }
+
+    if (pilihan < 1 || pilihan > 3) {
+        cout << "Pilihan tidak tersedia! Pilih angka 1-3.\n";
+        laporanTransaksi();
+        return;
+    }
     
     switch (pilihan) {
         case 1:
@@ -136,8 +148,19 @@ void menuPetugas(pelanggan* p) {
     cout << "2. Keluar " << endl;
     cout << "==========================" << endl;
     cout << "Pilih menu: ";
-    cin >> pilihan;
+    if (!(cin >> pilihan)) {
+        cout << "Input tidak valid! Harap masukkan ANGKA 1-2.\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        menuPetugas(p);
+        return;
+    }
 
+    if (pilihan < 1 || pilihan > 2) {
+        cout << "Pilihan tidak tersedia! Pilih angka 1-2.\n";
+        menuPetugas(p);
+        return;
+    }
     switch (pilihan) {
         case 1:
             laporanTransaksi();
