@@ -3,6 +3,8 @@
 #include "header/petugas.h"
 #include "header/pengeloaan_sampah.h"
 #include "header/menu.h"
+#include <limits>
+#include <cctype>
 
 using namespace std;
 

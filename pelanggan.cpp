@@ -2,6 +2,8 @@
 #include "header/pengeloaan_sampah.h"
 #include "header/petugas.h"
 #include "header/menu.h"
+#include <limits>
+#include <cctype>
 #include <iostream>
 #include <ctime>
 using namespace std;
@@ -101,7 +103,7 @@ SampahNode* insertSampahKePelanggan(pelanggan* p, const Sampah& s) {
 
 
 void menuUser(pelanggan* p) {
-    cout << "\n===== MENU USER =====\n";
+    cout << "\n===== MENU PELANGGAN =====\n";
     cout << "Nama   : " << p->dataPelanggan.nama << endl;
     cout << "Alamat : " << p->dataPelanggan.alamat << endl;
     cout << "No Telp: " << p->dataPelanggan.no_telp << endl;

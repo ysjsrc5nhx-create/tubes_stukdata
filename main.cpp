@@ -3,6 +3,8 @@
 #include "header/login.h"
 #include "header/dataDumy.h"
 #include "header/menu.h"
+#include <limits>
+#include <cctype>
 #include <iostream>
 using namespace std;
 

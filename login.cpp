@@ -3,6 +3,8 @@
 #include "header/pelanggan.h"
 #include "header/petugas.h"
 #include "header/menu.h"
+#include <limits>
+#include <cctype>
 #include <iostream>
 using namespace std;
 

@@ -3,6 +3,8 @@
 #include "header/petugas.h"
 #include "header/menu.h"
 #include <iostream>
+#include <limits>
+#include <cctype>
 using namespace std;
 
 void adminListUser(pelanggan* head) {
@@ -29,13 +31,13 @@ void adminListUser(pelanggan* head) {
 
 void adminTambahUser(pelanggan*& head, pelanggan*& tail) {
     DataUser newUser;
-     cout << "\n===== TAMBAH USER / PETUGAS =====\n";
+     cout << "\n===== TAMBAH USER =====\n";
     cout << "Username : "; cin >> newUser.username;
     cout << "Password : "; cin >> newUser.password;
     cout << "Nama     : "; cin >> newUser.nama;
     cout << "Alamat   : "; cin >> newUser.alamat;
     cout << "No Telp  : "; cin >> newUser.no_telp;
-    cout << "Role (user/petugas): "; cin >> newUser.role;
+    cout << "Role (user/petugas/admin): "; cin >> newUser.role;
 
     insertPelanggan(head, tail, newUser);
     cout << "User berhasil ditambahkan." << endl;
@@ -43,7 +45,7 @@ void adminTambahUser(pelanggan*& head, pelanggan*& tail) {
 
 void adminEditUser(pelanggan* head) {
     string username;
-    cout << "\n===== EDIT USER / PETUGAS =====\n";
+    cout << "\n===== EDIT USER =====\n";
     cout << "Masukkan username yang akan diedit: ";
     cin >> username;
 
@@ -66,7 +68,7 @@ void adminEditUser(pelanggan* head) {
 
 void adminHapusUser(pelanggan*& head) {
     string username;
-    cout << "\n===== HAPUS USER / PETUGAS =====\n";
+    cout << "\n===== HAPUS USER =====\n";
     cout << "Masukkan username yang akan dihapus: ";
     cin >> username;
 
@@ -105,16 +107,16 @@ void adminMenu(pelanggan*& head, pelanggan*& tail) {
     int choice;
     do {
         cout << "\n===== MENU ADMIN =====\n";
-        cout << "1. List User/Petugas\n";
-        cout << "2. Tambah User/Petugas\n";
-        cout << "3. Edit User/Petugas\n";
-        cout << "4. Hapus User/Petugas\n";
-        cout << "5. cari user \n";
+        cout << "1. List Users\n";
+        cout << "2. Tambah Users\n";
+        cout << "3. Edit Users\n";
+        cout << "4. Hapus Users\n";
+        cout << "5. cari users \n";
         cout << "6. Liat Semua List Transaksi\n";
         cout << "7. Keluar\n";
         cout << "Pilih menu: ";
         if (!(cin >> choice)) {
-        cout << "Input tidak valid! Harap masukkan ANGKA 1-5.\n";
+        cout << "Input tidak valid! Harap masukkan ANGKA 1-7.\n";
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         adminMenu(head, tail);
