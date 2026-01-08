@@ -3,7 +3,6 @@
 #include <string>
 using namespace std;
 
-// forward-declare Transaksi to avoid circular include with petugas.h
 struct Transaksi;
 
 typedef struct Sampah {
@@ -14,10 +13,10 @@ typedef struct Sampah {
 } Sampah;
 
 struct SampahNode {
-    Sampah dataSampah;        // ✅ konsisten dengan cpp
+    Sampah dataSampah;        
     SampahNode* next;
     SampahNode* prev;
-    Transaksi* transaksi;     // ✅ HANYA 1
+    Transaksi* transaksi;     // HANYA 1
 };
 
 
